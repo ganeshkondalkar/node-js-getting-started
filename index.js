@@ -26,8 +26,6 @@ express()
   .get('/db', (req, res) => {
     try {
         const client = await pool.connect();
-        const createDB = await client.query('CREATE TABLE IF NOT EXISTS test_table(id integer, name text)');
-        // const createData = await client.query('INSERT INTO test_table');
         const result = await client.query('SELECT * FROM test_table');
         res.render('pages/db', result);
         client.release();
