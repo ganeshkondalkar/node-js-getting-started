@@ -8,7 +8,7 @@
 <div class="container">
 	<h2>Database Results</h2>
 	<ul>
-		<% for (let row of rows) { %>
+		<% for (let row = 0; row < rows.length; row++) { %>
 		    <li><%= row.id %> - <%= row.name %></li>
 		<% } %>
 	</ul>
