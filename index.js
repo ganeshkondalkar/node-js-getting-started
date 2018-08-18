@@ -31,7 +31,7 @@ express()
         console.log('typeof RESULTS: ', typeof results.rows);
         // res.render('pages/db', results.rows);
         const rows = JSON.parse( JSON.stringify(results.rows) );
-        res.render( 'pages/db', rows );
+        res.render( 'pages/db', {rows} );
         client.release();
     } catch (err) {
         console.error(err);
