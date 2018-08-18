@@ -8,6 +8,7 @@ const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: true
 });
+client.connect();
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -25,7 +26,7 @@ express()
   })
   .get('/db', async (req, response) => {
     try {
-        client.connect();
+        
         client.query('SELECT * FROM test_table;', (err, res) => {
           if (err) throw err;
           const results = res.rows;
