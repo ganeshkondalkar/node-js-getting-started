@@ -23,13 +23,13 @@ express()
     }
     res.send(result)
   })
-  .get('/db', async (req, res) => {
+  .get('/db', async (req, response) => {
     try {
         client.connect();
         client.query('SELECT * FROM test_table;', (err, res) => {
           if (err) throw err;
           const results = res.rows;
-          res.render('pages/db', results);
+          response.render('pages/db', results);
           /*for (let row of res.rows) {
             console.log(JSON.stringify(row));
           } */
