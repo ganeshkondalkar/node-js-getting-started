@@ -11,9 +11,11 @@
 <div class="container">
 <h2>Database Results</h2>
 <ul>
-    <% results.forEach(function(r) { %>
-        <li><%= r.id %> - <%= r.name %></li>
-    <% }); %>
+    <% if (results && results.rows) { %>
+	    <% for (let row of results.rows) { %>
+	        <li><%= row.id %> - <%= row.name %></li>
+	    <% } %>
+    <% } %>
 </ul>
 
 </div>
