@@ -2,9 +2,9 @@ const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-const { Pool } = require('pg');
+const { Client } = require('pg');
 
-const pool = new Pool({
+const client = new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: true
 });
@@ -25,12 +25,15 @@ express()
   })
   .get('/db', async (req, res) => {
     try {
-        const client = await pool.connect();
-        const results = await client.query('SELECT * FROM test_table', (err, results) => {
-            console.log('RESULTS: ', results);
-            console.error('ERROR: ', err);
-            res.render('pages/db', results);
-            client.release();
+        client.connect();
+        client.query('SELECT * FROM test_table;', (err, res) => {
+          if (err) throw err;
+          const results = res.rows;
+          res.render('pages/db', results);
+          /*for (let row of res.rows) {
+            console.log(JSON.stringify(row));
+          } */
+          client.end();
         });
     } catch (err) {
         console.error(err);
