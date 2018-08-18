@@ -2,13 +2,12 @@ const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
-const client = new Client({
+const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
 });
-client.connect();
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
@@ -24,18 +23,13 @@ express()
     }
     res.send(result)
   })
-  .get('/db', async (req, response) => {
+  .get('/db', async (req, res) => {
     try {
-        
-        client.query('SELECT * FROM test_table;', (err, res) => {
-          if (err) throw err;
-          const results = res.rows;
-          response.render('pages/db', results);
-          /*for (let row of res.rows) {
-            console.log(JSON.stringify(row));
-          } */
-          client.end();
-        });
+        const client = await pool.connect();
+        const results = await client.query('SELECT * FROM test_table');
+        console.log('RESULTS: ', results);
+        res.render('pages/db', results.rows);
+        client.release();
     } catch (err) {
         console.error(err);
         res.send("Error: " + err);
