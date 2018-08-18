@@ -30,7 +30,8 @@ express()
         console.log('RESULTS: ', results.rows);
         console.log('typeof RESULTS: ', typeof results.rows);
         // res.render('pages/db', results.rows);
-        res.send( JSON.stringify(results.rows) );
+        const rows = JSON.parse(results.rows);
+        res.render( 'pages/db', rows );
         client.release();
     } catch (err) {
         console.error(err);

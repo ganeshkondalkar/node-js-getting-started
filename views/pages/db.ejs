@@ -3,22 +3,15 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
-
 <body>
-
 <% include ../partials/nav.ejs %>
-
 <div class="container">
-<h2>Database Results</h2>
-<ul>
-    <% if (results && results.rows) { %>
-	    <% for (let row of results.rows) { %>
-	        <li><%= row.id %> - <%= row.name %></li>
-	    <% } %>
-    <% } %>
-</ul>
-
+	<h2>Database Results</h2>
+	<ul>
+		<% for (let row of rows) { %>
+		    <li><%= row.id %> - <%= row.name %></li>
+		<% } %>
+	</ul>
 </div>
-
 </body>
 </html>
