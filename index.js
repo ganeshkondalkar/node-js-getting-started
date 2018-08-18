@@ -1,8 +1,8 @@
 const cool = require('cool-ascii-faces');
 const express = require('express');
 const path = require('path');
-const { Pool } = require('pg');
 const PORT = process.env.PORT || 5000;
+const { Pool } = require('pg');
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -23,7 +23,7 @@ express()
     }
     res.send(result)
   })
-  .get('/db', (req, res) => {
+  .get('/db', async (req, res) => {
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM test_table');
@@ -34,4 +34,4 @@ express()
         res.send("Error: " + err);
     }
   })
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
