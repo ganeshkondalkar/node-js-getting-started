@@ -3,20 +3,18 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
-
 <body>
-
 <% include ../partials/nav.ejs %>
 
 <div class="container">
 <h2>Database Results</h2>
 <ul>
     <% rows.forEach(function(row) { %>
-        <li><%= row.id %> - <%= row.name %></li>
+        <li id="<%= row.id %>">
+            <%= row.name %>
+        </li>
     <% }); %>
 </ul>
-
 </div>
-
 </body>
 </html>
